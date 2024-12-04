@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send CV</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your public key
+        (function() {
+            emailjs.init("D8ttOjwL-z764Uqaw"); // Thay bằng Public Key của bạn
+        })();
+
+        window.onload = function() {
+            document.getElementById('email-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Lấy địa chỉ email người nhận
+                const toEmail = document.getElementById("toEmail").value;
+                
+                // Liên kết CV đã được lưu trữ (ví dụ Google Drive hoặc Dropbox)
+                const cvLink = "https://drive.google.com/file/d/1R836WVKkTVq5vish8SXbFTlsX7I7MUaM/view"; // Thay bằng link CV của bạn
+
+                // Dữ liệu mẫu email
+                const templateParams = {
+                    to_email: toEmail,
+                    title: "CV xin việc Frontend Developer",
+                    description: "Chào bạn, tôi gửi CV xin việc ứng tuyển vị trí Frontend Developer. Rất mong được hợp tác.",
+                    cv_link: cvLink  // Liên kết đến CV của bạn
+                };
+
+                // Gửi email qua EmailJS
+                emailjs.send("service_ib5bet6", "template_i9rfjvv", templateParams)
+                    .then(() => {
+                        alert('Email đã được gửi thành công!');
+                    })
+                    .catch((error) => {
+                        alert('Có lỗi xảy ra khi gửi email.');
+                        console.error("Error sending email:", error);
+                    });
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Gửi CV</h2>
+    <form id="email-form">
+        <!-- Địa chỉ email của người nhận -->
+        <label for="toEmail">Email người nhận:</label>
+        <input type="email" id="toEmail" name="toEmail" required>
+
+        <!-- Nút gửi -->
+        <input type="submit" value="Gửi CV">
+    </form>
+
+</body>
+</html>
